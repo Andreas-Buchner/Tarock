@@ -250,11 +250,12 @@ def main():
         fig, ax = plt.subplots(1, 1, figsize=(16, 9), dpi=80)
         entries = cursor.execute("SELECT * FROM Spiele").fetchall()
         dates = [d[0] for d in entries]
+        dates = ["Start"] + dates
         upper, lower = 0.0, 0.0
         if andi:
             andi_y = [d[1] for d in entries]
             current = 0
-            tmp = []
+            tmp = [0]
             for x in andi_y:
                 tmp.append(current+x)
                 current += x
@@ -268,7 +269,7 @@ def main():
         if mama:
             mama_y = [d[2] for d in entries]
             current = 0
-            tmp = []
+            tmp = [0]
             for x in mama_y:
                 tmp.append(current + x)
                 current += x
@@ -282,7 +283,7 @@ def main():
         if markus:
             markus_y = [d[3] for d in entries]
             current = 0
-            tmp = []
+            tmp = [0]
             for x in markus_y:
                 tmp.append(current + x)
                 current += x
@@ -296,7 +297,7 @@ def main():
         if papa:
             papa_y = [d[4] for d in entries]
             current = 0
-            tmp = []
+            tmp = [0]
             for x in papa_y:
                 tmp.append(current + x)
                 current += x
@@ -343,7 +344,6 @@ def main():
             pic_dir,
             format='jpg'
         )
-
 
     def answer(update: Update, context: CallbackContext) -> None:
         if update.message.text.upper() == "Hilfe".upper():
