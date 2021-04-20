@@ -312,11 +312,11 @@ def main():
 
         # Decorations
         ax.set_title('Spielverlauf', fontsize=18)
-        upper = round(upper * 1.01, 2)
-        lower = round(lower * 0.99, 2)
+        upper = round(upper) + 1
+        lower = round(lower) - 1
         y_ticks = np.arange(lower,
                             upper,
-                            round(np.divide(upper - lower, 10), 2))
+                            0.5 if round((upper-lower)/10) == 0 else round((upper-lower)/10))
         ax.set(ylim=[y_ticks[0], y_ticks[-1]])
         ax.legend(loc='best', fontsize=12)
         label_ten_ticks = round(len(dates) / 10)  # label around 10 ticks every time it's plotted
