@@ -189,7 +189,7 @@ def main():
         if None in [andi, markus, mama, papa]:
             return "Es wurden nicht alle Spieler genannt (Andi, Mama, Papa, Markus)"
 
-        if mama + markus + andi + papa != 0:
+        if mama + markus + andi + papa != 0.0:
             return f"Die Summe der Spielstände ist nicht 0 (Buchhaltung by Markus?)" \
                    f"\n{andi} + {markus} + {mama} + {papa} = {andi + markus + mama + papa}\n" \
                    f"Probiers nochmal mit einem Korrekturfaktor wenns sein muss"
