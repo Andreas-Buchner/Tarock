@@ -144,8 +144,8 @@ def main():
         if None in [andi, markus, mama, papa]:
             return "Es wurden nicht alle Spieler genannt (Andi, Mama, Papa, Markus)"
 
-        if sum([mama, markus, andi, papa]) != 0.0:
-            print(mama + markus + papa + andi)
+        if round(sum([mama, markus, andi, papa]), 3) != 0.0:
+            print(mama + markus + andi + papa)
             print(sum([mama, markus, andi, papa]))
             return f"Die Summe der Spielstände ist nicht 0 (Buchhaltung by Markus?)" \
                    f"\n{andi} + {markus} + {mama} + {papa} = {andi + markus + mama + papa}\n" \
@@ -190,9 +190,7 @@ def main():
         if None in [andi, markus, mama, papa]:
             return "Es wurden nicht alle Spieler genannt (Andi, Mama, Papa, Markus)"
 
-        if sum([mama, markus, andi, papa]) != 0.0:
-            print(mama + markus + andi + papa)
-            print(sum([mama, markus, andi, papa]))
+        if round(sum([mama, markus, andi, papa]), 3) != 0.0:
             return f"Die Summe der Spielstände ist nicht 0 (Buchhaltung by Markus?)" \
                    f"\n{andi} + {markus} + {mama} + {papa} = {andi + markus + mama + papa}\n" \
                    f"Probiers nochmal mit einem Korrekturfaktor wenns sein muss"
