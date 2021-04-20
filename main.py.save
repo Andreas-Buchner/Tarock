@@ -1,7 +1,8 @@
+#!/usr/bin/env python3 
+
 import datetime
 
-import config
-from telegram import Update
+imfrom telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 import sqlite3
 import os
@@ -9,6 +10,7 @@ import os
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.image as image
 
 import numpy as np
 
@@ -144,9 +146,7 @@ def main():
         if None in [andi, markus, mama, papa]:
             return "Es wurden nicht alle Spieler genannt (Andi, Mama, Papa, Markus)"
 
-        if sum([mama, markus, andi, papa]) != 0.0:
-            print(mama + markus + papa + andi)
-            print(sum([mama, markus, andi, papa]))
+        if mama + markus + andi + papa != 0:
             return f"Die Summe der Spielstände ist nicht 0 (Buchhaltung by Markus?)" \
                    f"\n{andi} + {markus} + {mama} + {papa} = {andi + markus + mama + papa}\n" \
                    f"Probiers nochmal mit einem Korrekturfaktor wenns sein muss"
@@ -190,9 +190,7 @@ def main():
         if None in [andi, markus, mama, papa]:
             return "Es wurden nicht alle Spieler genannt (Andi, Mama, Papa, Markus)"
 
-        if sum([mama, markus, andi, papa]) != 0.0:
-            print(mama + markus + andi + papa)
-            print(sum([mama, markus, andi, papa]))
+        if mama + markus + andi + papa != 0:
             return f"Die Summe der Spielstände ist nicht 0 (Buchhaltung by Markus?)" \
                    f"\n{andi} + {markus} + {mama} + {papa} = {andi + markus + mama + papa}\n" \
                    f"Probiers nochmal mit einem Korrekturfaktor wenns sein muss"
@@ -253,12 +251,11 @@ def main():
         fig, ax = plt.subplots(1, 1, figsize=(16, 9), dpi=80)
         entries = cursor.execute("SELECT * FROM Spiele").fetchall()
         dates = [d[0] for d in entries]
-        dates = ["Start"] + dates
         upper, lower = 0.0, 0.0
         if andi:
             andi_y = [d[1] for d in entries]
             current = 0
-            tmp = [0]
+            tmp = []
             for x in andi_y:
                 tmp.append(current+x)
                 current += x
@@ -272,7 +269,7 @@ def main():
         if mama:
             mama_y = [d[2] for d in entries]
             current = 0
-            tmp = [0]
+            tmp = []
             for x in mama_y:
                 tmp.append(current + x)
                 current += x
@@ -286,7 +283,7 @@ def main():
         if markus:
             markus_y = [d[3] for d in entries]
             current = 0
-            tmp = [0]
+            tmp = []
             for x in markus_y:
                 tmp.append(current + x)
                 current += x
@@ -300,7 +297,7 @@ def main():
         if papa:
             papa_y = [d[4] for d in entries]
             current = 0
-            tmp = [0]
+            tmp = []
             for x in papa_y:
                 tmp.append(current + x)
                 current += x
@@ -315,11 +312,11 @@ def main():
 
         # Decorations
         ax.set_title('Spielverlauf', fontsize=18)
-        upper = round(upper) + 1
-        lower = round(lower) - 1
+        upper = round(upper * 1.01, 2)
+        lower = round(lower * 0.99, 2)
         y_ticks = np.arange(lower,
                             upper,
-                            0.5 if round((upper-lower)/10) == 0 else round((upper-lower)/10))
+                            round(np.divide(upper - lower, 10), 2))
         ax.set(ylim=[y_ticks[0], y_ticks[-1]])
         ax.legend(loc='best', fontsize=12)
         label_ten_ticks = round(len(dates) / 10)  # label around 10 ticks every time it's plotted
@@ -347,6 +344,7 @@ def main():
             pic_dir,
             format='jpg'
         )
+
 
     def answer(update: Update, context: CallbackContext) -> None:
         if update.message.text.upper() == "Hilfe".upper():
