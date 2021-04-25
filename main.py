@@ -106,7 +106,7 @@ def main():
         total = cursor.execute("SELECT * FROM Gesamtstand").fetchall()
 
         for t in total:
-            result += f"\n{t[0]} {float(t[1])}"
+            result += f"\n{t[0]} {round(t[1], 2)}"
 
         return result
 
