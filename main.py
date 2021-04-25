@@ -380,7 +380,7 @@ def main():
         if update.message.text.upper().startswith("Alle".upper()):
             pool.submit(parse_for_plot, "Andi-Mama-Markus_Papa", update)
             return
-        pool.submit(parse_for_plot, (update.message.text, update))
+        pool.submit(parse_for_plot, update.message.text, update)
 
     updater = Updater(config.bot_token)
     dispatcher = updater.dispatcher
