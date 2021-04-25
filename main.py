@@ -348,13 +348,13 @@ def main():
 
         # Draw Tick lines
         for y in y_ticks:
-            plt.hlines(y, xmin=0, xmax=len(dates), colors='black', alpha=0.15, linestyles="--", lw=0.5)
+            plt.hlines(y, xmin=0, xmax=len(dates), colors='black', alpha=0.3, linestyles="--", lw=0.5)
 
         # Lighten borders
         plt.gca().spines["top"].set_alpha(0)
-        plt.gca().spines["bottom"].set_alpha(.3)
+        plt.gca().spines["bottom"].set_alpha(0.15)
         plt.gca().spines["right"].set_alpha(0)
-        plt.gca().spines["left"].set_alpha(.3)
+        plt.gca().spines["left"].set_alpha(.15)
 
         plt.ylim(lower, upper)
         plt.savefig(
