@@ -260,7 +260,7 @@ def main():
         plot_is_busy = False
 
     def generate_plot(andi=False, markus=False, mama=False, papa=False):
-        alpha_to_fill = 0.3
+        alpha_to_fill = 0.5
         fig, ax = plt.subplots(1, 1, figsize=(16, 9), dpi=80)
         entries = cursor.execute("SELECT * FROM Spiele").fetchall()
         dates = [d[0] for d in entries]
