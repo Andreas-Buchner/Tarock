@@ -279,7 +279,7 @@ def main():
             if min(andi_y) < lower:
                 lower = min(andi_y)
             ax.fill_between(dates, y1=andi_y, y2=0, label='Andi',
-                            alpha=alpha_to_fill, color='tab:blue', linewidth=2)
+                            alpha=alpha_to_fill, color='deepskyblue', linewidth=2)
         if mama:
             mama_y = [d[2] for d in entries]
             current = 0
@@ -293,7 +293,7 @@ def main():
             if min(mama_y) < lower:
                 lower = min(mama_y)
             ax.fill_between(dates, y1=mama_y, y2=0, label='Mama',
-                            alpha=alpha_to_fill, color='tab:red', linewidth=2)
+                            alpha=alpha_to_fill, color='red', linewidth=2)
         if markus:
             markus_y = [d[3] for d in entries]
             current = 0
@@ -307,7 +307,7 @@ def main():
             if min(markus_y) < lower:
                 lower = min(markus_y)
             ax.fill_between(dates, y1=markus_y, y2=0, label='Markus',
-                            alpha=alpha_to_fill, color='tab:green', linewidth=2)
+                            alpha=alpha_to_fill, color='green', linewidth=2)
         if papa:
             papa_y = [d[4] for d in entries]
             current = 0
