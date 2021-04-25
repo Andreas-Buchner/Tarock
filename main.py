@@ -1,4 +1,6 @@
 import datetime
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 import config
 from telegram import Update
@@ -12,6 +14,7 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 
+plot_is_busy = False
 
 def main():
     # Set up Database
@@ -67,6 +70,9 @@ def main():
     connection.commit()
 
     pic_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'plot.jpg')
+
+    pool = ThreadPoolExecutor(max_workers=3)
+
 
     def start_command(update: Update, context: CallbackContext) -> None:
         update.message.reply_text("Ich verwalte und visualisiere Buchners Tarock Spielstände.")
@@ -217,6 +223,7 @@ def main():
         return f"Habe das Spiel am {date} gelöscht"
 
     def parse_for_plot(text, update) -> None:
+        global plot_is_busy
         if text.upper().startswith("Andi".upper()):
             ...
         elif text.upper().startswith("Markus".upper()):
@@ -238,6 +245,10 @@ def main():
         if "Papa".upper() in text.upper():
             papa = True
 
+        while plot_is_busy:  # avoid the case where two messages are being sent and one gets the result of another...
+            time.sleep(1)
+
+        plot_is_busy = True
         generate_plot(andi=andi, markus=markus, mama=mama, papa=papa)
         try:
             pic = open(pic_dir, 'rb')
@@ -246,6 +257,7 @@ def main():
             return
         update.message.reply_photo(pic)
         pic.close()
+        plot_is_busy = False
 
     def generate_plot(andi=False, markus=False, mama=False, papa=False):
         fig, ax = plt.subplots(1, 1, figsize=(16, 9), dpi=80)
@@ -366,9 +378,9 @@ def main():
             update.message.reply_text(delete_game(update.message.text))
             return
         if update.message.text.upper().startswith("Alle".upper()):
-            parse_for_plot("Andi-Mama-Markus_Papa", update)
+            pool.submit(parse_for_plot, "Andi-Mama-Markus_Papa", update)
             return
-        parse_for_plot(update.message.text, update)
+        pool.submit(parse_for_plot, (update.message.text, update))
 
     updater = Updater(config.bot_token)
     dispatcher = updater.dispatcher
