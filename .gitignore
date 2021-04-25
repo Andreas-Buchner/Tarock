@@ -132,3 +132,7 @@ config.py
 
 .idea
 .idea/*
+
+plot.jpg
+
+tarock.db
