@@ -321,7 +321,7 @@ def main():
             if min(papa_y) < lower:
                 lower = min(papa_y)
             ax.fill_between(dates, y1=papa_y, y2=0, label='Papa',
-                            alpha=alpha_to_fill, color='tab:yellow', linewidth=2)
+                            alpha=alpha_to_fill, color='yellow', linewidth=2)
 
 
         # Decorations
